@@ -1,3 +1,4 @@
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Usage
 
 Creates a KMS Key for use with S3.
@@ -31,14 +32,28 @@ This project constitutes a work of the United States Government and is not subje
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12 |
-| aws | >= 2.55.0 |
+| terraform | >= 0.13 |
+| aws | ~> 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 2.55.0 |
+| aws | ~> 3.0 |
+
+## Modules
+
+No Modules.
+
+## Resources
+
+| Name |
+|------|
+| [aws_caller_identity](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) |
+| [aws_iam_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) |
+| [aws_kms_alias](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_alias) |
+| [aws_kms_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) |
+| [aws_partition](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) |
 
 ## Inputs
 
@@ -48,7 +63,7 @@ This project constitutes a work of the United States Government and is not subje
 | enable\_key\_rotation | Specifies whether key rotation is enabled. | `bool` | `true` | no |
 | key\_deletion\_window\_in\_days | Duration in days after which the key is deleted after destruction of the resource, must be between 7 and 30 days. | `string` | `30` | no |
 | name | The display name of the alias. The name must start with the word "alias" followed by a forward slash (alias/). | `string` | `"alias/s3"` | no |
-| principals | AWS Principals that can use this KMS key.  Use ["\*"] to allow all principals. | `list(string)` | n/a | yes |
+| principals | AWS Principals that can use this KMS key.  Use ["*"] to allow all principals. | `list(string)` | n/a | yes |
 | tags | Tags applied to the KMS key. | `map(string)` | `{}` | no |
 
 ## Outputs
@@ -58,4 +73,4 @@ This project constitutes a work of the United States Government and is not subje
 | aws\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias. |
 | aws\_kms\_alias\_name | The display name of the alias. |
 | aws\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key. |
-
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
