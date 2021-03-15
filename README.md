@@ -73,4 +73,5 @@ No Modules.
 | aws\_kms\_alias\_arn | The Amazon Resource Name (ARN) of the key alias. |
 | aws\_kms\_alias\_name | The display name of the alias. |
 | aws\_kms\_key\_arn | The Amazon Resource Name (ARN) of the key. |
+| aws\_kms\_key\_id | The id of the key
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
