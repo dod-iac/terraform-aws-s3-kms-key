@@ -14,6 +14,6 @@ output "aws_kms_key_arn" {
 }
 
 output "aws_kms_key_id" {
-  description = "The Amazon Resource Name (ARN) of the key."
+  description = "The globally unique identifier for the key."
   value       = aws_kms_key.s3.id
 }
