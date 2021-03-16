@@ -15,5 +15,5 @@ output "aws_kms_key_arn" {
 
 output "aws_kms_key_id" {
   description = "The globally unique identifier for the key."
-  value       = aws_kms_key.s3.id
+  value       = aws_kms_key.s3.key_id
 }
