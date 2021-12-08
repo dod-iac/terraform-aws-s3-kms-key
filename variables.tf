@@ -23,7 +23,10 @@ variable "name" {
 }
 
 variable "principals" {
-  type        = list(string)
+  type = list(object({
+    identifiers = list(string)
+    type        = string
+  }))
   description = "AWS Principals that can use this KMS key.  Use [\"*\"] to allow all principals."
 }
 

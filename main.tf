@@ -55,27 +55,34 @@ data "aws_iam_policy_document" "s3" {
     }
     resources = ["*"]
   }
-  statement {
-    sid = "AllowFull"
-    actions = [
-      "kms:Encrypt",
-      "kms:Decrypt",
-      "kms:ReEncrypt",
-      "kms:GenerateDataKey*",
-      "kms:DescribeKey"
-    ]
-    effect = "Allow"
-    principals {
-      type        = "AWS"
-      identifiers = var.principals
+
+
+  dynamic "statement" {
+    for_each = var.principals
+    content {
+      sid = format("AllowFull-%s-%s", statement.value["type"], join("-", statement.value["identifiers"]))
+      actions = [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
+      ]
+      effect = "Allow"
+      principals {
+        type        = statement.value["type"]
+        identifiers = statement.value["identifiers"]
+      }
+      resources = ["*"]
+      condition {
+        test     = "StringLike"
+        variable = "kms:ViaService"
+        values   = ["s3.*.amazonaws.com"]
+      }
     }
-    resources = ["*"]
-    condition {
-      test     = "StringLike"
-      variable = "kms:ViaService"
-      values   = ["s3.*.amazonaws.com"]
-    }
+
   }
+
 }
 
 resource "aws_kms_key" "s3" {
