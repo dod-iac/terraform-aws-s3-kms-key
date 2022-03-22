@@ -55,10 +55,35 @@ data "aws_iam_policy_document" "s3" {
     }
     resources = ["*"]
   }
+  dynamic "statement" {
+    for_each = range(length(var.principals) > 0 ? 1 : 0)
+    content {
+      sid = "AllowFull"
+      actions = [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
+      ]
+      effect = "Allow"
+      principals {
+        type        = "AWS"
+        identifiers = var.principals
+      }
+      resources = ["*"]
+      condition {
+        test     = "StringLike"
+        variable = "kms:ViaService"
+        values   = ["s3.*.amazonaws.com"]
+      }
+    }
+  }
+
 
 
   dynamic "statement" {
-    for_each = var.principals
+    for_each = var.principals_extended
     content {
       sid = format("AllowFull-%s-%s", statement.value["type"], join("-", statement.value["identifiers"]))
       actions = [
