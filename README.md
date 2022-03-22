@@ -63,7 +63,7 @@ No modules.
 | <a name="input_enable_key_rotation"></a> [enable\_key\_rotation](#input\_enable\_key\_rotation) | Specifies whether key rotation is enabled. | `bool` | `true` | no |
 | <a name="input_key_deletion_window_in_days"></a> [key\_deletion\_window\_in\_days](#input\_key\_deletion\_window\_in\_days) | Duration in days after which the key is deleted after destruction of the resource, must be between 7 and 30 days. | `string` | `30` | no |
 | <a name="input_name"></a> [name](#input\_name) | The display name of the alias. The name must start with the word "alias" followed by a forward slash (alias/). | `string` | `"alias/s3"` | no |
-| <a name="input_principals"></a> [principals](#input\_principals) | AWS Principals that can use this KMS key.  Use ["*"] to allow all principals. | <pre>list(object({<br>    identifiers = list(string)<br>    type        = string<br>  }))</pre> | n/a | yes |
+| <a name="input_principals"></a> [principals](#input\_principals) | AWS Principals that can use this KMS key.  Use ["*"] to allow all principals. | <pre>list(object({<br>    identifiers = list(string)<br>    type        = string<br>  }))</pre> | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags applied to the KMS key. | `map(string)` | `{}` | no |
 
 ## Outputs

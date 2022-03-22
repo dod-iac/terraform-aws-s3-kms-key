@@ -27,6 +27,7 @@ variable "principals" {
     identifiers = list(string)
     type        = string
   }))
+  default     = []
   description = "AWS Principals that can use this KMS key.  Use [\"*\"] to allow all principals."
 }
 
