@@ -33,6 +33,7 @@ variable "principals_extended" {
 variable "principals" {
   type        = list(string)
   description = "AWS Principals that can use this KMS key.  Use [\"*\"] to allow all principals."
+  default     = []
 }
 
 variable "tags" {
