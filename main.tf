@@ -32,6 +32,7 @@
 data "aws_caller_identity" "current" {}
 
 data "aws_partition" "current" {}
+data "aws_region" "current" {}
 
 # https://docs.aws.amazon.com/kms/latest/developerguide/services-s3.html#s3-customer-cmk-policy
 
@@ -53,7 +54,11 @@ data "aws_iam_policy_document" "s3" {
         )
       ]
     }
-    resources = ["*"]
+    condition {
+      test     = "StringLike"
+      variable = "kms:CallerAccount"
+      values   = data.aws_caller_identity.current.account_id
+    }
   }
   dynamic "statement" {
     for_each = range(length(var.principals) > 0 ? 1 : 0)
@@ -71,7 +76,6 @@ data "aws_iam_policy_document" "s3" {
         type        = "AWS"
         identifiers = var.principals
       }
-      resources = ["*"]
       condition {
         test     = "StringLike"
         variable = "kms:ViaService"
@@ -98,7 +102,6 @@ data "aws_iam_policy_document" "s3" {
         type        = statement.value["type"]
         identifiers = statement.value["identifiers"]
       }
-      resources = ["*"]
       condition {
         test     = "StringLike"
         variable = "kms:ViaService"
