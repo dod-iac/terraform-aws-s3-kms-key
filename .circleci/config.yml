@@ -15,7 +15,7 @@ jobs:
     steps:
       - checkout
       - terraform/install:
-        terraform_version: 0.13.5
+        terraform_version: 1.1.7
       - run:
           name: "Download and install terraform-docs"
           command: |
@@ -27,7 +27,7 @@ jobs:
             chmod 755 terraform-docs-v${TERRAFORM_DOCS_VERSION}-linux-amd64
             mv terraform-docs-v${TERRAFORM_DOCS_VERSION}-linux-amd64 ~/bin/terraform-docs
           environment:
-            TERRAFORM_DOCS_VERSION: "0.11.2"
+            TERRAFORM_DOCS_VERSION: "0.16.0"
             TERRAFORM_DOCS_SHA256SUM: "0d1e42d6fcb15b14027ae8efb794edb1cd7faa7a32507ccad449340529d04937"
       - run: echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
       - run: scripts/update-docs
