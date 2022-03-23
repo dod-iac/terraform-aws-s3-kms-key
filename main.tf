@@ -37,6 +37,7 @@ data "aws_region" "current" {}
 # https://docs.aws.amazon.com/kms/latest/developerguide/services-s3.html#s3-customer-cmk-policy
 
 data "aws_iam_policy_document" "s3" {
+
   policy_id = "key-policy-s3"
   statement {
     sid = "Enable IAM User Permissions"
@@ -44,6 +45,7 @@ data "aws_iam_policy_document" "s3" {
       "kms:*",
     ]
     effect = "Allow"
+    #checkov:skip=CKV_AWS_109:Root is root
     principals {
       type = "AWS"
       identifiers = [
@@ -55,10 +57,12 @@ data "aws_iam_policy_document" "s3" {
       ]
     }
     condition {
-      test     = "StringLike"
-      variable = "kms:CallerAccount"
-      values   = [data.aws_caller_identity.current.account_id]
+      test     = "Bool"
+      variable = "aws:MultiFactorAuthPresent"
+      values   = ["true"]
     }
+    #checkov:skip=CKV_AWS_111:Resource policy
+    resources = ["*"]
   }
   dynamic "statement" {
     for_each = range(length(var.principals) > 0 ? 1 : 0)
@@ -81,6 +85,8 @@ data "aws_iam_policy_document" "s3" {
         variable = "kms:ViaService"
         values   = ["s3.*.amazonaws.com"]
       }
+      #checkov:skip=CKV_AWS_111:Resource policy
+      resources = ["*"]
     }
   }
 
@@ -105,8 +111,10 @@ data "aws_iam_policy_document" "s3" {
       condition {
         test     = "StringLike"
         variable = "kms:ViaService"
-        values   = ["s3.*.amazonaws.com"]
+        values   = [data.aws_caller_identity.current.account_id]
       }
+      #checkov:skip=CKV_AWS_111:Resource policy
+      resources = ["*"]
     }
 
   }
