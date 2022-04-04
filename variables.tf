@@ -22,9 +22,18 @@ variable "name" {
   default     = "alias/s3"
 }
 
+variable "principals_extended" {
+  type = list(object({
+    identifiers = list(string)
+    type        = string
+  }))
+  default     = []
+  description = "extended for support of AWS principals that do not use the AWS identifier"
+}
 variable "principals" {
   type        = list(string)
   description = "AWS Principals that can use this KMS key.  Use [\"*\"] to allow all principals."
+  default     = []
 }
 
 variable "tags" {
