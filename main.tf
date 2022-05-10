@@ -95,7 +95,7 @@ data "aws_iam_policy_document" "s3" {
   dynamic "statement" {
     for_each = var.principals_extended
     content {
-      sid = format("AllowFull-%s-%s", statement.value["type"], join("-", statement.value["identifiers"]))
+      sid = format("AllowFull-viaservice-%s-%s", statement.value["type"], join("-", statement.value["identifiers"]))
       actions = [
         "kms:Encrypt",
         "kms:Decrypt",
@@ -111,6 +111,32 @@ data "aws_iam_policy_document" "s3" {
       condition {
         test     = "StringLike"
         variable = "kms:ViaService"
+        values   = [data.aws_caller_identity.current.account_id]
+      }
+      #checkov:skip=CKV_AWS_111:Resource policy
+      resources = ["*"]
+    }
+
+  }
+  dynamic "statement" {
+    for_each = var.principals_extended
+    content {
+      sid = format("AllowFull-direct-%s-%s", statement.value["type"], join("-", statement.value["identifiers"]))
+      actions = [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey"
+      ]
+      effect = "Allow"
+      principals {
+        type        = statement.value["type"]
+        identifiers = statement.value["identifiers"]
+      }
+      condition {
+        test     = "StringLike"
+        variable = "aws:SourceArn"
         values   = [data.aws_caller_identity.current.account_id]
       }
       #checkov:skip=CKV_AWS_111:Resource policy
