@@ -108,11 +108,7 @@ data "aws_iam_policy_document" "s3" {
         type        = statement.value["type"]
         identifiers = statement.value["identifiers"]
       }
-      condition {
-        test     = "StringLike"
-        variable = "kms:ViaService"
-        values   = [data.aws_caller_identity.current.account_id]
-      }
+      
       #checkov:skip=CKV_AWS_111:Resource policy
       resources = ["*"]
     }
