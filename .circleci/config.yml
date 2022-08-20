@@ -31,8 +31,8 @@ jobs:
           environment:
             TERRAFORM_DOCS_VERSION: "0.16.0"
       - run: echo 'export PATH=~/bin:$PATH' >> $BASH_ENV
-      - run: scripts/update-docs
-      - run: scripts/format-files
+      - run: make update_docs
+      - run: make format_terraform
       - run: git diff --exit-code
 
 workflows:
