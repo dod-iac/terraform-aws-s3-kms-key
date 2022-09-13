@@ -20,9 +20,9 @@ module "s3_kms_key" {
 
 ## Terraform Version
 
-Terraform 0.12. Pin module version to ~> 1.0.0 . Submit pull-requests to master branch.
+Terraform 0.13. Pin module version to ~> 1.0.0 . Submit pull-requests to main branch.
 
-Terraform 0.11 is not supported.
+Terraform 0.11 and 0.12 are not supported.
 
 ## License
 
@@ -33,13 +33,13 @@ This project constitutes a work of the United States Government and is not subje
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0, < 5.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 3.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0, < 5.0 |
 
 ## Modules
 
@@ -54,7 +54,6 @@ No modules.
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_iam_policy_document.s3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
-| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
 
@@ -65,7 +64,6 @@ No modules.
 | <a name="input_key_deletion_window_in_days"></a> [key\_deletion\_window\_in\_days](#input\_key\_deletion\_window\_in\_days) | Duration in days after which the key is deleted after destruction of the resource, must be between 7 and 30 days. | `string` | `30` | no |
 | <a name="input_name"></a> [name](#input\_name) | The display name of the alias. The name must start with the word "alias" followed by a forward slash (alias/). | `string` | `"alias/s3"` | no |
 | <a name="input_principals"></a> [principals](#input\_principals) | AWS Principals that can use this KMS key.  Use ["*"] to allow all principals. | `list(string)` | `[]` | no |
-| <a name="input_principals_extended"></a> [principals\_extended](#input\_principals\_extended) | extended for support of AWS principals that do not use the AWS identifier | <pre>list(object({<br>    identifiers = list(string)<br>    type        = string<br>  }))</pre> | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags applied to the KMS key. | `map(string)` | `{}` | no |
 
 ## Outputs
